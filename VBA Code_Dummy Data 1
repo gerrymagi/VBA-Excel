@@ -1,0 +1,73 @@
+'VBA Code - Dummy Data 1
+
+Sub cleaningData()
+
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim i, j As Long
+Dim LastRow_hasil, LastCol_hasil As Long
+Dim LastRow_data, LastCol_data As Long
+Dim LastRow_cleaned As Long
+Dim total_data, data_null, total_cleaned, data_cleaned As Integer
+Dim rngdata As Range
+
+Set wb = Workbooks("Dummy Data_1")
+Set ws1 = wb.Worksheets("raw_data")
+Set ws2 = wb.Worksheets("dirty")
+Set ws3 = wb.Worksheets("cleaned")
+Set ws4 = wb.Worksheets("data (backup)")
+
+LastCol_data = ws1.Cells(1, Columns.Count).End(xlToLeft).Column
+LastRow_hasil = ws2.Cells(Rows.Count, 1).End(xlUp).Row
+
+'hitung total dan null sekaligus
+total_data = 2
+data_null = 2
+ws1.Activate
+For i = 1 To LastCol_data
+    LastRow_data = ws1.Cells(Rows.Count, i).End(xlUp).Row
+    Set rngdata = Range(Cells(2, i), Cells(LastRow_data, i))
+    ws2.Cells(total_data, 2).Value = ws1.Cells(Rows.Count, i).End(xlUp).Row - 1
+    ws2.Cells(data_null, 3).Value = WorksheetFunction.CountBlank(rngdata)
+    total_data = total_data + 1
+    data_null = data_null + 1
+    Set rngdata = Nothing
+Next i
+
+'Persen Data Null
+ws2.Activate
+For i = 2 To LastRow_hasil
+    Range("D" & i).Value = Range("C" & i).Value / Range("B" & i).Value
+    Range("D" & i).NumberFormat = "0.0%"
+Next i
+
+'delete null data
+For j = 1 To LastCol_data
+    On Error Resume Next
+    ws1.Columns(j).SpecialCells(xlCellTypeBlanks).EntireRow.Delete
+Next j
+
+
+total_cleaned = 2
+data_cleaned = 2
+ws1.Activate
+For i = 1 To LastCol_data
+    LastRow_data = ws1.Cells(Rows.Count, i).End(xlUp).Row
+    Set rngdata = Range(Cells(2, i), Cells(LastRow_data, i))
+    ws3.Cells(total_cleaned, 2).Value = ws1.Cells(Rows.Count, i).End(xlUp).Row - 1
+    ws3.Cells(data_cleaned, 3).Value = WorksheetFunction.CountBlank(rngdata)
+    total_cleaned = total_cleaned + 1
+    data_cleaned = data_cleaned + 1
+    Set rngdata = Nothing
+Next i
+
+'Persen Data Null
+ws3.Activate
+LastRow_cleaned = ws3.Cells(Rows.Count, 1).End(xlUp).Row
+For i = 2 To LastRow_cleaned
+    Range("D" & i).Value = Range("C" & i).Value / Range("B" & i).Value
+    Range("D" & i).NumberFormat = "0.0%"
+Next i
+
+
+End Sub
