@@ -1,0 +1,33 @@
+'VBA Code Example Code 3
+
+Sub count_country()
+
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim i, j, k As Long
+Dim LastRow, LastCol As Long
+Dim count_country, prp, all_data As Integer
+Dim Rng As range
+
+Set wb = Workbooks("Dummy Data_1")
+Set ws1 = wb.Worksheets("raw_data")
+Set ws2 = wb.Worksheets("dirty")
+Set ws3 = wb.Worksheets("cleaned")
+Set ws4 = wb.Worksheets("data (backup)")
+
+LastRow = ws1.Cells(Rows.Count, 5).End(xlUp).Row
+LastCol = ws1.Cells(1, Columns.Count).End(xlToLeft).Column
+Set Rng = ws1.range(Cells(2, 7), Cells(LastRow, 7))
+
+count_country = WorksheetFunction.CountIf(Rng, "Indonesia")
+prp = Format(count_country / LastRow, "0.00%")
+
+
+Debug.Print prp
+Debug.Print count_country
+
+MsgBox "Jumlah Data Country yang berasal dari Indonesia adalah " & count_country & " Atau " & prp, vbInformation, _
+    "Jumlah Data Negara Indonesia"
+
+
+End Sub
