@@ -8,7 +8,6 @@ Dim i, j, k As Long
 Dim LastRow, LastCol As Long
 Dim count_male, count_female, count_others As Integer
 Dim Rng As range
-Dim male, female, others As Integer
 
 Set wb = Workbooks("Dummy Data_1")
 Set ws1 = wb.Worksheets("raw_data")
