@@ -5,6 +5,7 @@ Berikut ini adalah contoh code VBA Excel dengan menggunakan Data Dummy dengan 10
 Dengan data dummy tersebut akan dilakukan:
 
 1) Melakukan proses cleaning data, serta menghitung jumlah data null sebelum dan sesudah cleaning data.
+2) Menghitung Jumlah Gender : Male, Female, Others
 
 
 
