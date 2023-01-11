@@ -1,0 +1,38 @@
+'VBA Code Example 2
+
+Sub count_gender()
+
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim i, j, k As Long
+Dim LastRow, LastCol As Long
+Dim count_male, count_female, count_others As Integer
+Dim Rng As range
+Dim male, female, others As Integer
+
+Set wb = Workbooks("Dummy Data_1")
+Set ws1 = wb.Worksheets("raw_data")
+Set ws2 = wb.Worksheets("dirty")
+Set ws3 = wb.Worksheets("cleaned")
+Set ws4 = wb.Worksheets("data (backup)")
+
+LastRow = ws1.Cells(Rows.Count, 5).End(xlUp).Row
+LastCol = ws1.Cells(1, Columns.Count).End(xlToLeft).Column
+Set Rng = ws1.range(Cells(2, 5), Cells(LastRow, 5))
+
+count_male = WorksheetFunction.CountIf(Rng, "Male")
+count_female = WorksheetFunction.CountIf(Rng, "Female")
+count_others = WorksheetFunction.CountIfs(Rng, "<>Male", Rng, "<>Female")
+
+Debug.Print count_male
+Debug.Print count_female
+Debug.Print count_others
+
+MsgBox "Jumlah Gender Male: " & count_male & vbNewLine & vbNewLine & _
+    "Jumlah Gender Female: " & count_female & vbNewLine & vbNewLine & _
+    "Jumlah Gender Lainnya: " & count_others, vbInformation, "Jumlah Gender Male, Female, dan Lainnya"
+
+Set Rng = Nothing
+
+
+End Sub
