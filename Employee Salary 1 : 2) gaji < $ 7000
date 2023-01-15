@@ -1,0 +1,50 @@
+Sub filter_sort_data_2()
+
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim i As Long
+Dim RowsCount, LastRow, LastCol As Long
+Dim adasheet As Boolean
+Dim x As Integer
+Dim LastRow_filtered As Long
+
+
+Set wb = Workbooks("Employee Salary")
+Set ws_data = wb.Worksheets("data")
+
+'check jika belum ada sheets "< $ 7000 per tahun"
+For Each ws In wb.Worksheets
+    If ws.Name = "< $ 7000 per tahun" Then
+        adasheet = True
+        Set ws_7000 = wb.Worksheets("< $ 7000 per tahun")
+        Exit For
+    End If
+    
+    If Not adasheet Then
+        Sheets.Add.Name = "< $ 7000 per tahun"
+        Set ws_7000 = wb.Worksheets("< $ 7000 per tahun")
+        ws_7000.Cells(1, 1).Value = "employee_name"
+        ws_7000.Cells(1, 2).Value = "department"
+        ws_7000.Range(Cells(1, 1), Cells(1, 2)).EntireColumn.AutoFit
+    End If
+Next ws
+
+'pendataan nama dan departemen pegawai
+LastRow = ws_data.Cells(Rows.Count, 6).End(xlUp).Row
+LastCol = ws_data.Cells(1, Columns.Count).End(xlToLeft).Column
+
+x = 2
+For i = 2 To LastRow
+    If ws_data.Cells(i, 6).Value < 7000 Then
+        ws_7000.Range("A" & x).Value = ws_data.Range("B" & i).Value
+        ws_7000.Range("B" & x).Value = ws_data.Range("E" & i).Value
+        x = x + 1
+    End If
+Next i
+
+LastRow_filtered = ws_7000.Cells(Rows.Count, 1).End(xlUp).Row
+
+MsgBox "Total pegawai dengan gaji < $ 7000 sebanyak " & LastRow_filtered - 1
+
+
+End Sub
