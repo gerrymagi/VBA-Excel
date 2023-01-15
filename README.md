@@ -9,6 +9,7 @@ Dengan data dummy tersebut akan dilakukan:
 
 1) Melakukan proses cleaning data, serta menghitung jumlah data null sebelum dan sesudah cleaning data.
 2) Menghitung Jumlah Gender : Male, Female, Others
+3) Menghitung jumlah negara yang berasal dari "Indonesia"
 
 
 
