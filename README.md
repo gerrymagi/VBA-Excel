@@ -1,7 +1,8 @@
 # VBA-Excel
 
 
-#Dummy Data 1
+### Dummy Data 1 ###
+
 Berikut ini adalah contoh code VBA Excel dengan menggunakan Data Dummy dengan 1000 records data, yang didapatkan dari website https://www.mockaroo.com/
 
 Dengan data dummy tersebut akan dilakukan:
@@ -13,7 +14,8 @@ Dengan data dummy tersebut akan dilakukan:
 
 
 
-#Dummy Data - Employee Salary
+### Dummy Data - Employee Salary ###
+
 Berikut ini adalah contoh code VBA Excel dengan menggunakan Data Dummy dengan 1000 records data, yang didapatkan dari website https://www.mockaroo.com/
 
 Dengan data dummy tersebut akan dilakukan:
