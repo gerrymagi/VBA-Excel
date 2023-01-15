@@ -1,0 +1,46 @@
+Sub filter_sort_data_1()
+
+'Cara 1
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim i As Long
+Dim RowsCount, col, firstrow As Long
+
+Set wb = Workbooks("Employee Salary")
+Set ws = wb.Worksheets("data")
+
+ws.UsedRange.AutoFilter field:=3, Criteria1:="<30"
+
+colIndex = 3
+firstrow = 2
+With ws
+    RowsCount = .Range(.Cells(Rows.Count, 3).End(xlUp), .Cells(firstrow, colIndex)).SpecialCells(xlCellTypeVisible).Count
+    Debug.Print RowsCount
+End With
+
+
+MsgBox "Jumlah pegawai dengan usia dibawah 30 tahun: " & RowsCount
+
+If ws.AutoFilterMode Then
+    ws.AutoFilterMode = False
+End If
+
+'Cara 2
+Dim LastRow, LastCol As Long
+Dim dataInRange As Integer
+
+LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+LastCol = ws.Cells(1, Columns.Count).End(xlToLeft).Column
+
+dataInRange = 0
+For i = 2 To LastRow
+    If ws.Cells(i, 3).Value < 30 Then
+        dataInRange = dataInRange + 1
+    End If
+Next i
+
+Debug.Print dataInRange
+
+MsgBox "Jumlah pegawai dengan usia dibawah 30 tahun: " & dataInRange
+
+End Sub
