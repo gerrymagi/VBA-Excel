@@ -1,0 +1,53 @@
+Sub filter_sort_data_3()
+
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim i, j As Long
+Dim LastRow, LastCol As Long
+Dim adasheet As Boolean
+
+Set wb = Workbooks("Employee Salary")
+Set ws1 = wb.Worksheets("< $ 7000 per tahun")
+Set ws2 = wb.Worksheets("data")
+Set ws3 = wb.Worksheets("data (backup)")
+
+
+'check jika belum ada sheets "$8000 < x < $10000"
+For Each ws In wb.Worksheets
+    If ws.Name = "$8000 < x < $10000" Then
+        adasheet = True
+        Set ws_8010 = wb.Worksheets("$8000 < x < $10000")
+        Exit For
+    End If
+Next ws
+
+If Not adasheet = True Then
+    Sheets.Add.Name = "$8000 < x < $10000"
+    Set ws_8010 = wb.Worksheets("$8000 < x < $10000")
+    ws_8010.Cells(1, 1).Value = "employee_name"
+    ws_8010.Cells(1, 2).Value = "department"
+    ws_8010.Range(Cells(1, 1), Cells(1, 2)).EntireColumn.AutoFit
+End If
+
+
+'pendataan nama dan departemen pegawai
+LastRow = ws2.Cells(Rows.Count, 6).End(xlUp).Row
+LastCol = ws2.Cells(1, Columns.Count).End(xlToLeft).Column
+
+x = 2
+For i = 2 To LastRow
+    If ws2.Cells(i, 6).Value > 8000 _
+    And ws2.Cells(i, 6).Value < 10000 Then
+        ws_8010.Range("A" & x).Value = ws2.Range("B" & i).Value
+        ws_8010.Range("B" & x).Value = ws2.Range("E" & i).Value
+        x = x + 1
+    End If
+Next i
+x = 0
+
+LastRow_filtered = ws_8010.Cells(Rows.Count, 1).End(xlUp).Row
+
+MsgBox "Total pegawai dengan gaji $8000 < x < $10000 sebanyak " & LastRow_filtered - 1
+
+
+End Sub
